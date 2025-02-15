@@ -83,16 +83,19 @@ class SendMessage(TLObject):  # type: ignore
         send_as (:obj:`InputPeer <pyrogram.raw.base.InputPeer>`, *optional*):
             N/A
 
+        effect (``int`` ``64-bit``, *optional*):
+            N/A
+
     Returns:
         :obj:`Updates <pyrogram.raw.base.Updates>`
     """
 
-    __slots__: List[str] = ["peer", "message", "random_id", "no_webpage", "silent", "background", "clear_draft", "noforwards", "update_stickersets_order", "invert_media", "reply_to", "reply_markup", "entities", "schedule_date", "send_as"]
+    __slots__: List[str] = ["peer", "message", "random_id", "no_webpage", "silent", "background", "clear_draft", "noforwards", "update_stickersets_order", "invert_media", "reply_to", "reply_markup", "entities", "schedule_date", "send_as", "effect"]
 
     ID = 0x280d096f
     QUALNAME = "functions.messages.SendMessage"
 
-    def __init__(self, *, peer: "raw.base.InputPeer", message: str, random_id: int, no_webpage: Optional[bool] = None, silent: Optional[bool] = None, background: Optional[bool] = None, clear_draft: Optional[bool] = None, noforwards: Optional[bool] = None, update_stickersets_order: Optional[bool] = None, invert_media: Optional[bool] = None, reply_to: "raw.base.InputReplyTo" = None, reply_markup: "raw.base.ReplyMarkup" = None, entities: Optional[List["raw.base.MessageEntity"]] = None, schedule_date: Optional[int] = None, send_as: "raw.base.InputPeer" = None) -> None:
+    def __init__(self, *, peer: "raw.base.InputPeer", message: str, random_id: int, no_webpage: Optional[bool] = None, silent: Optional[bool] = None, background: Optional[bool] = None, clear_draft: Optional[bool] = None, noforwards: Optional[bool] = None, update_stickersets_order: Optional[bool] = None, invert_media: Optional[bool] = None, reply_to: "raw.base.InputReplyTo" = None, reply_markup: "raw.base.ReplyMarkup" = None, entities: Optional[List["raw.base.MessageEntity"]] = None, schedule_date: Optional[int] = None, send_as: "raw.base.InputPeer" = None, effect: Optional[int] = None) -> None:
         self.peer = peer  # InputPeer
         self.message = message  # string
         self.random_id = random_id  # long
@@ -108,6 +111,7 @@ class SendMessage(TLObject):  # type: ignore
         self.entities = entities  # flags.3?Vector<MessageEntity>
         self.schedule_date = schedule_date  # flags.10?int
         self.send_as = send_as  # flags.13?InputPeer
+        self.effect = effect  # flags.18?long
 
     @staticmethod
     def read(b: BytesIO, *args: Any) -> "SendMessage":
@@ -135,8 +139,8 @@ class SendMessage(TLObject):  # type: ignore
         
         schedule_date = Int.read(b) if flags & (1 << 10) else None
         send_as = TLObject.read(b) if flags & (1 << 13) else None
-        
-        return SendMessage(peer=peer, message=message, random_id=random_id, no_webpage=no_webpage, silent=silent, background=background, clear_draft=clear_draft, noforwards=noforwards, update_stickersets_order=update_stickersets_order, invert_media=invert_media, reply_to=reply_to, reply_markup=reply_markup, entities=entities, schedule_date=schedule_date, send_as=send_as)
+        effect = Long.read(b) if flags & (1 << 18) else None
+        return SendMessage(peer=peer, message=message, random_id=random_id, no_webpage=no_webpage, silent=silent, background=background, clear_draft=clear_draft, noforwards=noforwards, update_stickersets_order=update_stickersets_order, invert_media=invert_media, reply_to=reply_to, reply_markup=reply_markup, entities=entities, schedule_date=schedule_date, send_as=send_as, effect=effect)
 
     def write(self, *args) -> bytes:
         b = BytesIO()
@@ -155,6 +159,7 @@ class SendMessage(TLObject):  # type: ignore
         flags |= (1 << 3) if self.entities else 0
         flags |= (1 << 10) if self.schedule_date is not None else 0
         flags |= (1 << 13) if self.send_as is not None else 0
+        flags |= (1 << 18) if self.effect is not None else 0
         b.write(Int(flags))
         
         b.write(self.peer.write())
@@ -177,5 +182,8 @@ class SendMessage(TLObject):  # type: ignore
         
         if self.send_as is not None:
             b.write(self.send_as.write())
+        
+        if self.effect is not None:
+            b.write(Long(self.effect))
         
         return b.getvalue()
