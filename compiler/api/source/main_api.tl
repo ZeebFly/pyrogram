@@ -1458,6 +1458,12 @@ chatReactionsSome#661d4037 reactions:Vector<Reaction> = ChatReactions;
 messages.reactionsNotModified#b06fdbdf = messages.Reactions;
 messages.reactions#eafdf716 hash:long reactions:Vector<Reaction> = messages.Reactions;
 
+availableEffect#93c3e27e flags:# premium_required:flags.2?true id:long emoticon:string static_icon_id:flags.0?long effect_sticker_id:long effect_animation_id:flags.1?long = AvailableEffect;
+
+messages.availableEffectsNotModified#d1ed9a5b = messages.AvailableEffects;
+messages.availableEffects#bddb616e hash:int effects:Vector<AvailableEffect> documents:Vector<Document> = messages.AvailableEffects;
+
+
 emailVerifyPurposeLoginSetup#4345be73 phone_number:string phone_code_hash:string = EmailVerifyPurpose;
 emailVerifyPurposeLoginChange#527d22eb = EmailVerifyPurpose;
 emailVerifyPurposePassport#bbf51685 = EmailVerifyPurpose;
@@ -1946,6 +1952,8 @@ messages.togglePeerTranslations#e47cb579 flags:# disabled:flags.0?true peer:Inpu
 messages.getBotApp#34fdc5c3 app:InputBotApp hash:long = messages.BotApp;
 messages.requestAppWebView#8c5a3b3c flags:# write_allowed:flags.0?true peer:InputPeer app:InputBotApp start_param:flags.1?string theme_params:flags.2?DataJSON platform:string = AppWebViewResult;
 messages.setChatWallPaper#8ffacae1 flags:# peer:InputPeer wallpaper:flags.0?InputWallPaper settings:flags.2?WallPaperSettings id:flags.1?int = Updates;
+messages.getAvailableEffects#dea20a39 hash:int = messages.AvailableEffects;
+
 
 updates.getState#edd4882a = updates.State;
 updates.getDifference#19c2f763 flags:# pts:int pts_limit:flags.1?int pts_total_limit:flags.0?int date:int qts:int qts_limit:flags.2?int = updates.Difference;
