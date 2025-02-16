@@ -387,6 +387,7 @@ class Message(Object, Update):
         reply_to_message: "Message" = None,
         reply_to_story: "types.Story" = None,
         mentioned: bool = None,
+        effect_id: str = None,
         empty: bool = None,
         service: "enums.MessageServiceType" = None,
         scheduled: bool = None,
@@ -499,6 +500,7 @@ class Message(Object, Update):
         self.entities = entities
         self.caption_entities = caption_entities
         self.quote_entities = quote_entities
+        self.effect_id = effect_id
         self.audio = audio
         self.document = document
         self.photo = photo

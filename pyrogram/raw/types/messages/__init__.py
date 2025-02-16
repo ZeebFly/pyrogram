@@ -93,3 +93,5 @@ from .emoji_groups import EmojiGroups
 from .translate_result import TranslateResult
 from .bot_app import BotApp
 from .web_page import WebPage
+from .available_effects_not_modified import AvailableEffectsNotModified
+from .available_effects import AvailableEffects
