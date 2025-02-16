@@ -85,6 +85,7 @@ from .set_bot_callback_answer import SetBotCallbackAnswer
 from .get_peer_dialogs import GetPeerDialogs
 from .save_draft import SaveDraft
 from .get_all_drafts import GetAllDrafts
+from .get_available_effects import GetAvailableEffects
 from .get_featured_stickers import GetFeaturedStickers
 from .read_featured_stickers import ReadFeaturedStickers
 from .get_recent_stickers import GetRecentStickers
