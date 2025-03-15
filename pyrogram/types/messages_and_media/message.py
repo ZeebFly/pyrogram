@@ -477,6 +477,7 @@ class Message(Object, Update):
         self.forward_date = forward_date
         self.is_topic_message = is_topic_message
         self.message_thread_id = message_thread_id
+        self.effect_id = effect_id
         self.reply_to_message_id = reply_to_message_id
         self.reply_to_story_id = reply_to_story_id
         self.reply_to_story_user_id = reply_to_story_user_id
@@ -500,7 +501,6 @@ class Message(Object, Update):
         self.entities = entities
         self.caption_entities = caption_entities
         self.quote_entities = quote_entities
-        self.effect_id = effect_id
         self.audio = audio
         self.document = document
         self.photo = photo
@@ -917,6 +917,7 @@ class Message(Object, Update):
             parsed_message = Message(
                 id=message.id,
                 message_thread_id=message_thread_id,
+                effect_id=getattr(message, "effect", None),
                 date=utils.timestamp_to_datetime(message.date),
                 chat=types.Chat._parse(client, message, users, chats, is_chat=True),
                 topics=None,
@@ -1119,12 +1120,12 @@ class Message(Object, Update):
         disable_web_page_preview: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
         schedule_date: datetime = None,
         protect_content: bool = None,
-        effect_id: int = None,
         reply_markup=None
     ) -> "Message":
         """Bound method *reply_text* of :obj:`~pyrogram.types.Message`.
@@ -1211,12 +1212,12 @@ class Message(Object, Update):
             disable_web_page_preview=disable_web_page_preview,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             schedule_date=schedule_date,
             protect_content=protect_content,
-            effect_id=effect_id,
             reply_markup=reply_markup
         )
 
@@ -1242,11 +1243,11 @@ class Message(Object, Update):
             "types.ForceReply"
         ] = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
         progress: Callable = None,
-        effect_id: int = None,
         progress_args: tuple = ()
     ) -> "Message":
         """Bound method *reply_animation* :obj:`~pyrogram.types.Message`.
@@ -1374,11 +1375,11 @@ class Message(Object, Update):
             thumb=thumb,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -1396,6 +1397,7 @@ class Message(Object, Update):
         thumb: str = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
@@ -1406,7 +1408,6 @@ class Message(Object, Update):
             "types.ForceReply"
         ] = None,
         progress: Callable = None,
-        effect_id: int = None,
         progress_args: tuple = ()
     ) -> "Message":
         """Bound method *reply_audio* of :obj:`~pyrogram.types.Message`.
@@ -1530,11 +1531,11 @@ class Message(Object, Update):
             thumb=thumb,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -1688,11 +1689,11 @@ class Message(Object, Update):
         vcard: str = "",
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
         quote_entities: List["types.MessageEntity"] = None,
-        effect_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
             "types.ReplyKeyboardMarkup",
@@ -1779,11 +1780,11 @@ class Message(Object, Update):
             vcard=vcard,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             parse_mode=parse_mode,
             quote_entities=quote_entities,
-            effect_id=effect_id,
             reply_markup=reply_markup
         )
 
@@ -1799,10 +1800,10 @@ class Message(Object, Update):
         force_document: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
-        effect_id: int = None,
         schedule_date: datetime = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
@@ -1940,12 +1941,12 @@ class Message(Object, Update):
             force_document=force_document,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             schedule_date=schedule_date,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -1956,6 +1957,7 @@ class Message(Object, Update):
         quote: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
@@ -2020,6 +2022,7 @@ class Message(Object, Update):
             game_short_name=game_short_name,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             reply_markup=reply_markup
         )
@@ -2116,6 +2119,7 @@ class Message(Object, Update):
         quote: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
@@ -2193,6 +2197,7 @@ class Message(Object, Update):
             longitude=longitude,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
@@ -2205,6 +2210,7 @@ class Message(Object, Update):
         quote: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
@@ -2275,6 +2281,7 @@ class Message(Object, Update):
             media=media,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             parse_mode=parse_mode,
@@ -2292,10 +2299,10 @@ class Message(Object, Update):
         ttl_seconds: int = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
-        effect_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
             "types.ReplyKeyboardMarkup",
@@ -2417,11 +2424,11 @@ class Message(Object, Update):
             ttl_seconds=ttl_seconds,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -2444,6 +2451,7 @@ class Message(Object, Update):
         disable_notification: bool = None,
         protect_content: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
@@ -2584,6 +2592,7 @@ class Message(Object, Update):
             disable_notification=disable_notification,
             protect_content=protect_content,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             parse_mode=parse_mode,
@@ -2598,11 +2607,11 @@ class Message(Object, Update):
         quote: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
         quote_entities: List["types.MessageEntity"] = None,
-        effect_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
             "types.ReplyKeyboardMarkup",
@@ -2705,12 +2714,12 @@ class Message(Object, Update):
             sticker=sticker,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             parse_mode=parse_mode,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -2726,6 +2735,7 @@ class Message(Object, Update):
         foursquare_type: str = "",
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
@@ -2827,6 +2837,7 @@ class Message(Object, Update):
             foursquare_type=foursquare_type,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             parse_mode=parse_mode,
@@ -2850,9 +2861,9 @@ class Message(Object, Update):
         supports_streaming: bool = True,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
-        effect_id: int = None,
         quote_entities: List["types.MessageEntity"] = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
@@ -2998,11 +3009,11 @@ class Message(Object, Update):
             supports_streaming=supports_streaming,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
-            effect_id=effect_id,
             progress=progress,
             progress_args=progress_args
         )
@@ -3016,11 +3027,11 @@ class Message(Object, Update):
         thumb: str = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         quote_text: str = None,
         parse_mode: Optional["enums.ParseMode"] = None,
         quote_entities: List["types.MessageEntity"] = None,
-        effect_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
             "types.ReplyKeyboardMarkup",
@@ -3138,9 +3149,9 @@ class Message(Object, Update):
             thumb=thumb,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
-            effect_id=effect_id,
             parse_mode=parse_mode,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
@@ -3158,8 +3169,8 @@ class Message(Object, Update):
         duration: int = 0,
         disable_notification: bool = None,
         message_thread_id: int = None,
-        reply_to_message_id: int = None,
         effect_id: int = None,
+        reply_to_message_id: int = None,
         quote_text: str = None,
         quote_entities: List["types.MessageEntity"] = None,
         reply_markup: Union[
@@ -3277,9 +3288,9 @@ class Message(Object, Update):
             duration=duration,
             disable_notification=disable_notification,
             message_thread_id=message_thread_id,
+            effect_id=effect_id,
             reply_to_message_id=reply_to_message_id,
             quote_text=quote_text,
-            effect_id=effect_id,
             quote_entities=quote_entities,
             reply_markup=reply_markup,
             progress=progress,

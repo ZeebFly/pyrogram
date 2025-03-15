@@ -48,6 +48,7 @@ class SendVideo:
         supports_streaming: bool = True,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         reply_to_chat_id: Union[int, str] = None,
         reply_to_story_id: int = None,
@@ -272,6 +273,7 @@ class SendVideo:
                             schedule_date=utils.datetime_to_timestamp(schedule_date),
                             noforwards=protect_content,
                             reply_markup=await reply_markup.write(self) if reply_markup else None,
+                            effect_id=effect_id
                             **await utils.parse_text_entities(self, caption, parse_mode, caption_entities)
                         )
                     )

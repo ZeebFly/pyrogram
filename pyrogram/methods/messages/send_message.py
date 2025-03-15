@@ -34,6 +34,7 @@ class SendMessage:
         disable_web_page_preview: bool = None,
         disable_notification: bool = None,
         message_thread_id: int = None,
+        effect_id: int = None,
         reply_to_message_id: int = None,
         reply_to_chat_id: Union[int, str] = None,
         reply_to_story_id: int = None,
@@ -41,7 +42,6 @@ class SendMessage:
         quote_entities: List["types.MessageEntity"] = None,
         schedule_date: datetime = None,
         protect_content: bool = None,
-        effect_id: int = None,
         reply_markup: Union[
             "types.InlineKeyboardMarkup",
             "types.ReplyKeyboardMarkup",
@@ -170,7 +170,7 @@ class SendMessage:
                 message=message,
                 entities=entities,
                 noforwards=protect_content,
-                effect=effect_id,
+                effect=effect_id
             )
         )
 
