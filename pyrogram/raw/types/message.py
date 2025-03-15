@@ -181,6 +181,7 @@ class Message(TLObject):  # type: ignore
     def read(b: BytesIO, *args: Any) -> "Message":
         
         flags = Int.read(b)
+        flags2 = Int.read(b)
         
         out = True if flags & (1 << 1) else False
         mentioned = True if flags & (1 << 4) else False
@@ -193,7 +194,6 @@ class Message(TLObject):  # type: ignore
         pinned = True if flags & (1 << 24) else False
         noforwards = True if flags & (1 << 26) else False
         invert_media = True if flags & (1 << 27) else False
-        flags2 = Int.read(b)
         id = Int.read(b)
         
         from_id = TLObject.read(b) if flags & (1 << 8) else None
