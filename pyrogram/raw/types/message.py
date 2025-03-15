@@ -181,7 +181,6 @@ class Message(TLObject):  # type: ignore
     def read(b: BytesIO, *args: Any) -> "Message":
         
         flags = Int.read(b)
-        flags2 = Int.read(b)
         
         out = True if flags & (1 << 1) else False
         mentioned = True if flags & (1 << 4) else False
@@ -227,6 +226,7 @@ class Message(TLObject):  # type: ignore
         restriction_reason = TLObject.read(b) if flags & (1 << 22) else []
         
         ttl_period = Int.read(b) if flags & (1 << 25) else None
+        flags2 = Int.read(b)
         effect = Long.read(b) if flags2 & (1 << 2) else None
         return Message(id=id, peer_id=peer_id, date=date, message=message, out=out, mentioned=mentioned, media_unread=media_unread, silent=silent, post=post, from_scheduled=from_scheduled, legacy=legacy, edit_hide=edit_hide, pinned=pinned, noforwards=noforwards, invert_media=invert_media, from_id=from_id, fwd_from=fwd_from, via_bot_id=via_bot_id, reply_to=reply_to, media=media, reply_markup=reply_markup, entities=entities, views=views, forwards=forwards, replies=replies, edit_date=edit_date, post_author=post_author, grouped_id=grouped_id, reactions=reactions, restriction_reason=restriction_reason, ttl_period=ttl_period, effect=effect)
 
