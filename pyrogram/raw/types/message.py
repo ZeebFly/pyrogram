@@ -174,7 +174,7 @@ class Message(TLObject):  # type: ignore
         self.grouped_id = grouped_id  # flags.17?long
         self.reactions = reactions  # flags.20?MessageReactions
         self.restriction_reason = restriction_reason  # flags.22?Vector<RestrictionReason>
-        self.effect = effect  # flags2.2?long
+        self.effect = effect  # flags.26?long
         self.ttl_period = ttl_period  # flags.25?int
 
     @staticmethod
@@ -226,8 +226,7 @@ class Message(TLObject):  # type: ignore
         restriction_reason = TLObject.read(b) if flags & (1 << 22) else []
         
         ttl_period = Int.read(b) if flags & (1 << 25) else None
-        flags2 = Int.read(b)
-        effect = Long.read(b) if flags2 & (1 << 2) else None
+        effect = Long.read(b) if flags & (1 << 26) else None
         return Message(id=id, peer_id=peer_id, date=date, message=message, out=out, mentioned=mentioned, media_unread=media_unread, silent=silent, post=post, from_scheduled=from_scheduled, legacy=legacy, edit_hide=edit_hide, pinned=pinned, noforwards=noforwards, invert_media=invert_media, from_id=from_id, fwd_from=fwd_from, via_bot_id=via_bot_id, reply_to=reply_to, media=media, reply_markup=reply_markup, entities=entities, views=views, forwards=forwards, replies=replies, edit_date=edit_date, post_author=post_author, grouped_id=grouped_id, reactions=reactions, restriction_reason=restriction_reason, ttl_period=ttl_period, effect=effect)
 
     def write(self, *args) -> bytes:
@@ -262,10 +261,8 @@ class Message(TLObject):  # type: ignore
         flags |= (1 << 20) if self.reactions is not None else 0
         flags |= (1 << 22) if self.restriction_reason else 0
         flags |= (1 << 25) if self.ttl_period is not None else 0
+        flags |= (1 << 26) if self.effect is not None else 0
         b.write(Int(flags))
-        flags2 = 0
-        flags2 |= (1 << 2) if self.effect is not None else 0
-        b.write(Int(flags2))
         
         b.write(Int(self.id))
         
