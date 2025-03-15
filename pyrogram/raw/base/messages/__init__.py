@@ -71,3 +71,4 @@ from .emoji_groups import EmojiGroups
 from .translated_text import TranslatedText
 from .bot_app import BotApp
 from .web_page import WebPage
+from .available_effects import AvailableEffects

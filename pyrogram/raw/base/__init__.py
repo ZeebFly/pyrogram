@@ -321,4 +321,5 @@ from .premium_gift_code_option import PremiumGiftCodeOption
 from .prepaid_giveaway import PrepaidGiveaway
 from .boost import Boost
 from .my_boost import MyBoost
+from .available_effect import AvailableEffect
 from . import help, storage, auth, contacts, messages, updates, photos, upload, account, channels, payments, phone, stats, stickers, users, chatlists, bots, stories, premium

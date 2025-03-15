@@ -265,9 +265,9 @@ class Message(TLObject):  # type: ignore
         b.write(Int(flags))
         flags2 = 0
         flags2 |= (1 << 2) if self.effect is not None else 0
+        b.write(Int(flags2))
         
         b.write(Int(self.id))
-        b.write(Int(flags2))
         
         if self.from_id is not None:
             b.write(self.from_id.write())
