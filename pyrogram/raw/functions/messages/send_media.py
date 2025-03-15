@@ -83,6 +83,9 @@ class SendMedia(TLObject):  # type: ignore
         send_as (:obj:`InputPeer <pyrogram.raw.base.InputPeer>`, *optional*):
             N/A
 
+        effect (``int`` ``64-bit``, *optional*):
+            N/A
+
     Returns:
         :obj:`Updates <pyrogram.raw.base.Updates>`
     """
